@@ -83,6 +83,9 @@ public class TaxController {
 
     @ExceptionHandler(RuntimeException.class)
     public final ResponseEntity<String> handleAllExceptions(RuntimeException ex) {
+        System.out.println();
+        System.out.println("ERROR! = " + ex.getCause());
+        ex.printStackTrace();
         return new ResponseEntity<String>("ERROR! = " + ex.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
