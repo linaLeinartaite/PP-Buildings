@@ -29,7 +29,7 @@ public class TaxRestTest {
     public void getListOfTaxesTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/tax")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -38,7 +38,7 @@ public class TaxRestTest {
     public void getOneTaxTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/tax/{id}", "1")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -47,7 +47,7 @@ public class TaxRestTest {
     public void deleteTaxTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .delete("/rest/tax/{type}/", "apartment")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -59,7 +59,7 @@ public class TaxRestTest {
                 .post("/rest/tax")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isOk());
     }
     
@@ -71,7 +71,7 @@ public class TaxRestTest {
                 .post("/rest/tax")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().is5xxServerError());
     }
     
@@ -83,7 +83,7 @@ public class TaxRestTest {
                 .put("/rest/tax/{type}", "house")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isOk());
     }
     
@@ -95,7 +95,7 @@ public class TaxRestTest {
                 .put("/rest/tax/{type}", "house")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().is5xxServerError());
     }  
 }

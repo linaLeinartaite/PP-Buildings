@@ -28,7 +28,7 @@ public class BuildingRestTest {
     public void getListOfBuildingsTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/buildings")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -37,7 +37,7 @@ public class BuildingRestTest {
     public void getOneBuildingTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/buildings/{id}", "1")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -46,7 +46,7 @@ public class BuildingRestTest {
     public void deleteBuildingTest() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .delete("/rest/buildings/{id}/", 2)
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -72,7 +72,6 @@ public class BuildingRestTest {
                 .content(json)
                 .accept(MediaType.TEXT_PLAIN_VALUE))
                   .andExpect(status().is5xxServerError());
-              //  .andExpect(status().is4xxClientError());
     }
 
     @Test()
@@ -110,8 +109,6 @@ public class BuildingRestTest {
                 .content(json)
                 .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().is5xxServerError());
-               // .andExpect(status().is4xxClientError());
-
     }
 
     @Test

@@ -44,7 +44,7 @@ public class TaxController {
 
     @ApiOperation(value = "Delete certain property type with its tax rate")
     @Transactional
-    @DeleteMapping(value = "{type}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "{type}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity deleteT(@PathVariable(value = "type") String propertyType) {
 
         if (taxDAO.findById(propertyType).equals(Optional.empty())) {
@@ -56,7 +56,7 @@ public class TaxController {
 
     @ApiOperation(value = "Add new property type with its tax rate")
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity addT(@RequestBody Tax tax) {
 
         if (taxDAO.findById(tax.getPropertyType()).equals(Optional.empty())) {
@@ -69,7 +69,7 @@ public class TaxController {
 
     @ApiOperation(value = "Update tax rate of certain property type")
     @Transactional
-    @PutMapping(value = "{type}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{type}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity updateT(@PathVariable(value = "type") String propertyType, @RequestBody Tax updatedTax) {
 
         if (taxDAO.findById(propertyType).equals(Optional.empty())) {
