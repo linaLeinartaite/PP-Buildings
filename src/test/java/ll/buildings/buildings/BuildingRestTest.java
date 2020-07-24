@@ -58,11 +58,11 @@ public class BuildingRestTest {
                 .post("/rest/buildings")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isOk());
     }
-    
-       
+
+
     @Test
     public void addBuildingTestNeg() throws JsonProcessingException, Exception {
         String json = mapper.writeValueAsString(Building.createNewBuilding(null, null, "owner2", 80.0, new BigDecimal(10020), "appartment"));
@@ -70,10 +70,11 @@ public class BuildingRestTest {
                 .post("/rest/buildings")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
+                .accept(MediaType.TEXT_PLAIN_VALUE))
+                  .andExpect(status().is5xxServerError());
+              //  .andExpect(status().is4xxClientError());
     }
-    
+
     @Test()
     public void addExisting() throws JsonProcessingException, Exception {
         String json = mapper.writeValueAsString(Building.createNewBuilding(null, "Algirdo 41-a, Vilnius",
@@ -82,22 +83,24 @@ public class BuildingRestTest {
                 .post("/rest/buildings")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().is4xxClientError());
     }
-        
+
     @Test
     public void updateBuildingTest() throws JsonProcessingException, Exception {
         String json = mapper.writeValueAsString(Building.createNewBuilding(3, "address3", "owner3", 80.0, new BigDecimal(10020), "appartment"));
         this.mockMvc.perform(MockMvcRequestBuilders
                 .put("/rest/buildings/{id}", "3")
+                //says what is media-type of the request:
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                //tels what media-type of the response will be understood:
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isOk());
     }
-    
-         
+
+
     @Test
     public void updateBuildingTestNeg() throws JsonProcessingException, Exception {
         String json = mapper.writeValueAsString(Building.createNewBuilding(3, null, "owner3", 80.0, new BigDecimal(10020), "appartment"));
@@ -105,10 +108,12 @@ public class BuildingRestTest {
                 .put("/rest/buildings/{id}", "3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().is5xxServerError());
+               // .andExpect(status().is4xxClientError());
+
     }
-    
+
     @Test
     public void updateIntoExistingTest() throws JsonProcessingException, Exception {
         String json = mapper.writeValueAsString(Building.createNewBuilding(4, "Algirdo 41-a, Vilnius",
@@ -117,7 +122,7 @@ public class BuildingRestTest {
                 .put("/rest/buildings/{id}", "3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isAccepted());
     }
 

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/rest/tax")
-@Api(description = "Operations Applicable To Tax Rates of Building Types")
 public class TaxController {
 
     @Autowired

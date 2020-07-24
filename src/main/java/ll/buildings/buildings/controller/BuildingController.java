@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+
+import javassist.bytecode.ParameterAnnotationsAttribute;
 import ll.buildings.buildings.dao.BuildingDAO;
 import ll.buildings.buildings.dao.TaxDAO;
 import ll.buildings.buildings.data.Building;
@@ -27,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/rest/buildings")
-@Api(description = "Operations Applicable To Real Estate Building Registry")
 public class BuildingController {
 
     private final BigDecimal defaultTaxRate = new BigDecimal(0.2);
@@ -41,33 +42,33 @@ public class BuildingController {
     @ApiOperation(value = "Find all the buildings in Building Registry", nickname = "getListOfBuildings")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getListB() {
-        
+
         return buildingDAO.orderedList();
     }
 
     @ApiOperation(value = "Find building in Building Registry by its id number", nickname = "getOneBuildingById")
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<Building> getOneB(@PathVariable(value = "id") Integer id) {
-        
+
         return buildingDAO.findById(id);
     }
 
     @ApiOperation(value = "Delete building from Building Registry by its id number")
     @Transactional
-    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity deleteB(@PathVariable(value = "id") Integer id) {
-        
-        if (buildingDAO.findById(id).equals(Optional.empty())) {            
+
+        if (buildingDAO.findById(id).equals(Optional.empty())) {
             return new ResponseEntity("There is no building with such id!", HttpStatus.BAD_REQUEST);
         }
-        
+
         buildingDAO.deleteById(id);
         return new ResponseEntity("Building deleted successfully!", HttpStatus.OK);
     }
 
     @ApiOperation(value = "Add new building into Building Registry")
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity addB(@RequestBody Building building) {
         List<Building> exist = buildingDAO.getOneByOwnerAddres(building.getOwner(), building.getAddress());
 
@@ -81,7 +82,7 @@ public class BuildingController {
 
     @ApiOperation(value = "Update building from Building Registry by its id number")
     @Transactional
-    @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity updateB(@PathVariable(value = "id") Integer id, @RequestBody Building updatedBuilding) {
 
         Building b = buildingDAO.getOne(id);
